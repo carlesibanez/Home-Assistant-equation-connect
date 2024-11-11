@@ -1,4 +1,4 @@
 [submodule "custom_components/equation_connect/EquationConnect"]
 	path = custom_components/equation_connect/EquationConnect
 	url = git@github.com:carlesibanez/EquationConnect.git
-	branch = dev
+	branch = master
