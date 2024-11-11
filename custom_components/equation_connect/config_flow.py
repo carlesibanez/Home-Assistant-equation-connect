@@ -44,7 +44,7 @@ class EquationConnectConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     def authenticate(self, email, password):
         # Authenticate user with Equation Connect API
         try:
-            api = EquationConnectAPI(email, password)
+            api = API(email, password)
             return True if api.user else False
         except Exception:
             return False
