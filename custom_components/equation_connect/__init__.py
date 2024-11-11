@@ -2,7 +2,7 @@ import logging
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from .const import DOMAIN, PLATFORMS
-from .EquationConnect.EquationConnectAPI import EquationConnectAPI
+from .EquationConnect.EquationConnectAPI import API
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -12,7 +12,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     password = entry.data["password"]
 
     # Initialize API
-    api = await hass.async_add_executor_job(EquationConnectAPI, email, password)
+    api = await hass.async_add_executor_job(API, email, password)
     hass.data[DOMAIN] = api
 
     # Set up platforms (like climate, switch)

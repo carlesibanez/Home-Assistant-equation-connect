@@ -2,7 +2,7 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
 from .const import DOMAIN
-from .EquationConnect.EquationConnectAPI import EquationConnectAPI
+from .EquationConnect.EquationConnectAPI import API
 
 import homeassistant.helpers.config_validation as cv
 
