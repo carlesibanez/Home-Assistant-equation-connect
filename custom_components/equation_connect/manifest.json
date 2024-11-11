@@ -1,6 +1,6 @@
 {
     "domain": "equation_connect",
-    "name": "Equation Connect",
+    "name": "Equation Connect (Unofficial)",
     "version": "1.0.0",
     "config_flow": true,
     "documentation": "https://github.com/carlesibanez/equation_connect",
