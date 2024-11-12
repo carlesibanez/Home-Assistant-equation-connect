@@ -15,6 +15,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     api = await hass.async_add_executor_job(API, email, password)
     hass.data[DOMAIN] = api
 
+    # Retrieve devices once
+    devices = await hass.async_add_executor_job(api.get_devices)
+    hass.data[DOMAIN]["devices"] = devices  # Store devices in hass.data for all platforms
+
     # Set up platforms (like climate, switch)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 

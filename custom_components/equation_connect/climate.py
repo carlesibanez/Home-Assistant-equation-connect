@@ -4,9 +4,15 @@ from homeassistant.const import UnitOfTemperature
 import asyncio
 from .const import DOMAIN
 
-async def async_setup_entry(hass, config_entry, async_add_entities):
+# async def async_setup_entry(hass, config_entry, async_add_entities):
+#     api = hass.data[DOMAIN]
+#     devices = await hass.async_add_executor_job(api.get_devices) # Fetch all devices
+#     entities = [EquationConnectThermostat(api, device) for device in devices if device.get("data", {}).get("type") == "radiator"]
+#     async_add_entities(entities, True)
+
+async def async_setup_platform(hass, config_entry, async_add_entities):
     api = hass.data[DOMAIN]
-    devices = await hass.async_add_executor_job(api.get_devices) # Fetch all devices
+    devices = hass.data[DOMAIN]["devices"]
     entities = [EquationConnectThermostat(api, device) for device in devices if device.get("data", {}).get("type") == "radiator"]
     async_add_entities(entities, True)
 
@@ -14,10 +20,21 @@ class EquationConnectThermostat(ClimateEntity):
     def __init__(self, api, device):
         self._api = api
         self._device = device
-        self._attr_name = device.get("data", {}).get("name", "Radiator")
+        self._attr_name = "Thermostat" # device.get("data", {}).get("name", "Radiator")
         self._attr_unique_id = device.get("serialnumber")
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
         self._attr_hvac_mode = HVACMode.OFF
+
+    @property
+    def device_info(self):
+        """Return device information to tie entities to a single device."""
+        return {
+            "identifiers": {(DOMAIN, self._attr_unique_id)},
+            "name": self._device["data"]["name"],  # or use another meaningful name
+            "manufacturer": "Equation",  # Substitute with actual manufacturer if known
+            "model": "Radiator",
+            "sw_version": self._device["firmware_info"]["version"],
+        }
 
     async def async_set_temperature(self, **kwargs):
         loop = asyncio.get_running_loop()
