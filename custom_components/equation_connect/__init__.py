@@ -2,7 +2,7 @@ import logging
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from .const import DOMAIN, PLATFORMS
-from .EquationConnect.EquationConnectAPI import API
+from EquationConnectSDK.EquationConnectAPI import API
 
 _LOGGER = logging.getLogger(__name__)
 
