@@ -11,7 +11,7 @@ from .const import DOMAIN
 #     async_add_entities(entities, True)
 
 async def async_setup_platform(hass, config_entry, async_add_entities):
-    api = hass.data[DOMAIN]
+    api = hass.data[DOMAIN]["api"]
     devices = hass.data[DOMAIN]["devices"]
     entities = [EquationConnectThermostat(api, device) for device in devices if device.get("data", {}).get("type") == "radiator"]
     async_add_entities(entities, True)
