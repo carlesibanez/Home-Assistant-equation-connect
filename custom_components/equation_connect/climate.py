@@ -33,7 +33,7 @@ class EquationConnectThermostat(ClimateEntity):
             "name": self._device["data"]["name"],  # or use another meaningful name
             "manufacturer": "Equation",  # Substitute with actual manufacturer if known
             "model": "Radiator",
-            "sw_version": self._device["firmware_info"]["version"],
+            "sw_version": self._device["firmware"]["firmware_version_device"],
         }
 
     async def async_set_temperature(self, **kwargs):
