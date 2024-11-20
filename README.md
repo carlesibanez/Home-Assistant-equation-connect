@@ -21,8 +21,8 @@ To use the integration, download the latest release and copy the `equation_conne
 
 - [x]  Power ON/OFF each radiator  
 - [x]  Change radiator temperature  
+- [x]  Represent each radiator as one device. (To manage different properties, e.g. backlight, mode...)  
 - [ ]  Change radiator mode (ICE/ECO/COMFORT)
-- [ ]  Represent each radiator as one device. (To manage different properties, e.g. backlight, mode...)  
 - [ ]  Publish the integration on HACS.
 
 
