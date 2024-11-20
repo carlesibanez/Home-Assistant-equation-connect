@@ -13,7 +13,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     # Initialize API
     api = await hass.async_add_executor_job(API, email, password)
-    # hass.data[DOMAIN] = api
 
     # Retrieve devices once
     devices = await hass.async_add_executor_job(api.get_devices)
