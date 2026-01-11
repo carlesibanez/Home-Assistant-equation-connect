@@ -1,11 +1,11 @@
 {
     "domain": "equation_connect",
     "name": "Equation Connect (Unofficial)",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "config_flow": true,
     "documentation": "https://github.com/carlesibanez/Home-Assistant-equation-connect",
     "issue_tracker": "https://github.com/carlesibanez/Home-Assistant-equation-connect/issues",
-    "requirements": ["pyrebase4==4.8.0", "EquationConnectSDK==0.2.0"],
+    "requirements": ["EquationConnectSDK==0.3.1"],
     "dependencies": [],
     "codeowners": ["@carlesibanez"],
     "iot_class": "cloud_polling"

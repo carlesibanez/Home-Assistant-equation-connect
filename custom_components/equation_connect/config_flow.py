@@ -1,5 +1,6 @@
 import voluptuous as vol
 from homeassistant import config_entries
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.core import callback
 from .const import DOMAIN
 from EquationConnectSDK.EquationConnectAPI import API
@@ -13,38 +14,34 @@ class EquationConnectConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
 
         if user_input is not None:
+            session = async_get_clientsession(self.hass)
             email = user_input["email"]
             password = user_input["password"]
 
+            # Initialize API
+            api = API(email, password, session)
+
             # Attempt authentication here to verify credentials
             try:
-                if await self.hass.async_add_executor_job(
-                    self.authenticate, email, password
-                ):
-                    return self.async_create_entry(
-                        title="Equation Connect",
-                        data=user_input,
-                    )
+                user = await api.authenticate()
+
+                if not user:
+                    errors["base"] = "invalid_auth"
                 else:
-                    errors["base"] = "auth_error"
+                    return self.async_create_entry(
+                        title=email,
+                        data=user_input
+                    )
             except Exception:
-                errors["base"] = "unknown"
+                errors["base"] = "cannot_connect"
 
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required("email"): cv.string,
-                    vol.Required("password"): cv.string,
+                    vol.Required("email"): str,
+                    vol.Required("password"): str,
                 }
             ),
             errors=errors,
         )
-
-    def authenticate(self, email, password):
-        # Authenticate user with Equation Connect API
-        try:
-            api = API(email, password)
-            return True if api.user else False
-        except Exception:
-            return False
